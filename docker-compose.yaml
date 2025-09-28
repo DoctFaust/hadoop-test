@@ -1,0 +1,45 @@
+version: "2"
+services:
+   node01:
+      image: apache/hadoop:3
+      hostname: node01
+      command: ["hdfs", "namenode"]
+      networks:
+        hadoop-net:
+          ipv4_address: 192.168.120.201
+      ports:
+        - 9870:9870
+      env_file:
+        - ./config
+      environment:
+          ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
+   node02:
+      image: apache/hadoop:3
+      hostname: node02
+      command: ["hdfs", "datanode"]
+      networks:
+        hadoop-net:
+          ipv4_address: 192.168.120.202
+      env_file:
+        - ./config      
+   node03:
+      image: apache/hadoop:3
+      hostname: node03
+      command: ["hdfs", "datanode"]
+      networks:
+        hadoop-net:
+          ipv4_address: 192.168.120.203
+      env_file:
+        - ./config
+   node04:
+      image: apache/hadoop:3
+      hostname: node04
+      command: ["hdfs", "datanode"]
+      networks:
+        hadoop-net:
+          ipv4_address: 192.168.120.204
+      env_file:
+        - ./config
+networks:
+  hadoop-net:
+    external: true
